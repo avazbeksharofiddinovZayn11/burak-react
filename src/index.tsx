@@ -12,8 +12,9 @@ import { ThemeProvider } from "@emotion/react";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={theme}></ThemeProvider>
-      <
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+      </ThemeProvider>
       <App />
     </Provider>
   </React.StrictMode>,
