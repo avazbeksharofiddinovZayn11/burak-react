@@ -5,9 +5,9 @@ import { store } from "./app/store";
 import App from "./app/App";
 import reportWebVitals from "./reportWebVitals";
 import CssBaseline from "@mui/material/CssBaseline";
-import theme from "./css/theme";
 import "./css/index.css";
 import { ThemeProvider } from "@emotion/react";
+import theme from "./app/MaterialTheme";
 
 ReactDOM.render(
   <React.StrictMode>
