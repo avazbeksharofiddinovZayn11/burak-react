@@ -2,35 +2,22 @@ import React from "react";
 import "../css/app.css";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { RippleBadge } from "./MaterialTheme/styled";
-import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Link, Route, BrowserRouter as Router, Switch, useLocation } from "react-router-dom";
 import { HomePage } from "./screens/homePage";
 import { ProductsPage } from "./screens/productsPage";
 import { OrdersPage } from "./screens/ordersPage";
 import { UserPage } from "./userPage";
+import { HomeNavbar } from "./components/headers/HomeNavbar";
+import { OtherNavbar } from "./components/headers/OtherNavbar";
+import { Footer } from "./components/footer";
 
 
     function App() {
+      const location = useLocation();
+      console.log(location.pathname);
   return (
-    <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">HomePage</Link>
-            </li>
-            <li>
-              <Link to="/products">ProductsPage</Link>
-            </li>
-            <li>
-              <Link to="/orders">OrdersPage</Link>
-            </li>
-            <li>
-              <Link to="/member-page">Userspage</Link>
-            </li>
-          </ul>
-        </nav>
-
-
+      <>
+      {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
         <Switch>
           <Route path="/products">
             <ProductsPage />
@@ -45,15 +32,10 @@ import { UserPage } from "./userPage";
             <HomePage />
           </Route>
         </Switch>
-      </div>
-    </Router>
+        <Footer/>
+      </>
   );
 }
-
-
-
-
-
 
 export default App;
 
