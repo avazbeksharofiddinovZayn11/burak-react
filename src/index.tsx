@@ -8,14 +8,22 @@ import CssBaseline from "@mui/material/CssBaseline";
 import "./css/index.css";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./app/MaterialTheme";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <Router>
+        <App />
+        </Router>
       </ThemeProvider>
-      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
