@@ -38,8 +38,7 @@ import Test from "./screens/Test";
             <HelpPage />
           </Route>
           <Route path="/">
-          <Test />
-            {/* <HomePage /> */}
+            <HomePage />
           </Route>
         </Switch>
         <Footer/>
