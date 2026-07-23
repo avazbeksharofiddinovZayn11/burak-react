@@ -11,7 +11,7 @@ export interface Product {
   productSize: ProductSize;
   productVolemu: number;
   productDesc?: string;
-  ProductImages: string[];
+  productImages: string[];
   productViews: number;
   createdAt: Date;
   updatedAt: Date;
