@@ -18,7 +18,7 @@ public async getProducts(input: ProductInquiry): Promise<Product[]> {
     const result = await axios.get(url);
     console.log("getProducts", result);
 
-    return result.data.result; 
+    return result.data; 
   } catch (err) {
     console.log("Error, getProducts", err);
     throw err;

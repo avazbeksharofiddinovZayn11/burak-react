@@ -17,6 +17,7 @@ public async getTopUsers(): Promise<Member[]> {
 
 console.log(result.data);
 console.log(Array.isArray(result.data));
+console.log("result.data,", result.data);
 
 return result.data;
   } catch (err) {

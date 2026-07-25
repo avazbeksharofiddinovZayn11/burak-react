@@ -9,15 +9,31 @@ import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
+import { Dispatch } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { retrieveProducts } from "./selector";
+import { Product } from "../../../lib/types/product";
+import { setProducts } from "./slice";
+
+/** REDUX SLICE & SELECTOR **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setProducts: (data: Product[]) => dispatch(setProducts(data)),
+});
+
+const productsRetriever = createSelector(retrieveProducts, (products) => ({
+  products,
+}));
+
 const products = [
   { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab-fresh.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab.webp" },
-  { productName: "Lavash", imagePath: "/img/lavash.webp" },
-  { productName: "Lavash", imagePath: "/img/lavash.webp" },
   { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab-fresh.webp" },
+  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
+  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
+  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
+  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
+  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
+  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
 ];
 
 export default function Products() {
@@ -37,7 +53,7 @@ export default function Products() {
                 />
                 <Button
                   className={"single-button-search"}
-                  variant="contained"
+                  variant='contained'
                   endIcon={<SearchIcon />}
                 >
                   Search
@@ -110,7 +126,7 @@ export default function Products() {
                           />
                         </Button>
                         <Button className={"view-btn"} sx={{ right: "36px" }}>
-                          <Badge badgeContent={20} color="secondary">
+                          <Badge badgeContent={20} color='secondary'>
                             <RemoveRedEyeIcon
                               sx={{
                                 color: true ? "gray" : "white",
@@ -132,7 +148,7 @@ export default function Products() {
                   );
                 })
               ) : (
-                <Box className="no-data">Products are not available!</Box>
+                <Box className='no-data'>Products are not available!</Box>
               )}
             </Stack>
           </Stack>
@@ -182,10 +198,10 @@ export default function Products() {
             <Box className={"title"}>Our address</Box>
             <iframe
               style={{ marginTop: "60px" }}
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96326.03685561026!2d28.92022666528895!3d41.02112846139867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab82bea99445f%3A0x6ed7f4baceb4476c!2sMaiden&#39;s%20Tower!5e0!3m2!1sen!2skr!4v1757106097524!5m2!1sen!2skr"
-              width="1320"
-              height="500"
-              referrerPolicy="no-referrer-when-downgrade"
+              src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96326.03685561026!2d28.92022666528895!3d41.02112846139867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab82bea99445f%3A0x6ed7f4baceb4476c!2sMaiden&#39;s%20Tower!5e0!3m2!1sen!2skr!4v1757106097524!5m2!1sen!2skr'
+              width='1320'
+              height='500'
+              referrerPolicy='no-referrer-when-downgrade'
             ></iframe>
           </Stack>
         </Container>

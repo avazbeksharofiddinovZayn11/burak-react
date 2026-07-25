@@ -5,6 +5,7 @@ import { Product } from "./product";
 
 export interface AppRootState {
   homePage: HomePageState;
+  productsPage: ProductsPageState;
 }
 
 /** HOME PAGE **/
@@ -16,6 +17,12 @@ export interface HomePageState {
 }
 
 /** PRODUCT PAGE **/
+
+export interface ProductsPageState {
+  restaurant: Member | null;
+  chosenProduct: Product | null;
+  products: Product[];
+}
 
 /** ORDER PAGE **/
 
