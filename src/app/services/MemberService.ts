@@ -5,6 +5,7 @@ import { Member } from "../../lib/types/member";
 
 class MemberService {
   private readonly path: string;
+  getRestaurant: any;
 
   constructor() {
     this.path = serverApi;
