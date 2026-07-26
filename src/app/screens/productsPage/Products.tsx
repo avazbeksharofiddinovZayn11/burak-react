@@ -58,7 +58,7 @@ export default function Products() {
       productSearch.search = "";
       setProductSearch({ ...productSearch });
     }
-  }, []);
+  }, [searchText]);
 
   /** HANDLERS **/
   const searchCollectionHandler = (collection: ProductCollection) => {
@@ -84,7 +84,7 @@ export default function Products() {
   };
 
   const chooseDishHandler = (id: string) => {
-    history.push(`/product/${id}`);
+    history.push(`/products/${id}`);
   }
 
   return (
