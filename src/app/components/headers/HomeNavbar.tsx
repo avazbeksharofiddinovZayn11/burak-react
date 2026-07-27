@@ -6,30 +6,32 @@ import { CartItem } from "../../../lib/types/search";
 
 interface HomeNavbarProps {
   cartItems: CartItem[];
+  onAdd: (item: CartItem) => void;
+  onRemove: (item: CartItem) => void;
+  onDelete: (item: CartItem) => void;
+  onDeleteAll: () => void;
 }
 
 export default function HomeNavbar(props: HomeNavbarProps) {
-  const { cartItems } = props;
+  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
   const authMember = null;
 
-  const [count, setCount ] = useState<number>(0)
-  const [value, setvalue] = useState<boolean>(true)
+  const [count, setCount] = useState<number>(0);
+  const [value, setvalue] = useState<boolean>(true);
 
-  useEffect (() => {
+  useEffect(() => {
     console.log("componentDidMount");
-    setCount(count+1)
-    
+    setCount(count + 1);
+
     return () => {
-    console.log("componentWillUnmount")
-
-    }
-
+      console.log("componentWillUnmount");
+    };
   }, []);
 
   /**HANDLERS */
   const buttonHandler = () => {
-    setCount(count+1)
-  }
+    setCount(count + 1);
+  };
   return (
     <div className='home-navbar'>
       <Container className='navbar-container'>
@@ -68,7 +70,13 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               </NavLink>
             </Box>
 
-            <Basket cartItems={cartItems} />
+            <Basket
+              cartItems={cartItems}
+              onAdd={onAdd}
+              onRemove={onRemove}
+              onDelete={onDelete}
+              onDeleteAll={onDeleteAll}
+            />
             {!authMember ? (
               <Box>
                 <Button className='login-button'>Login</Button>
@@ -92,7 +100,11 @@ export default function HomeNavbar(props: HomeNavbarProps) {
             <Box className={"service-txt"}>{count} hours service</Box>
             <Box className={"signup"}>
               {!authMember ? (
-                <Button variant={"contained"} className={"signup-button"} onClick={ buttonHandler}>
+                <Button
+                  variant={"contained"}
+                  className={"signup-button"}
+                  onClick={buttonHandler}
+                >
                   SIGN UP
                 </Button>
               ) : null}
