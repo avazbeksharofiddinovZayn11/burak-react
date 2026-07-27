@@ -19,6 +19,7 @@ import ProductService from "../../services/ProductService";
 import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
+import { CartItem } from "../../../lib/types/search";
 
 /** REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -29,7 +30,12 @@ const productsRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
 
-export default function Products() {
+interface ProductsProps {
+  onAdd: (item: CartItem) => void;
+}
+
+export default function Products(props: ProductsProps) {
+  const { onAdd } = props;
   const { products } = useSelector(productsRetriever);
   const { setProducts } = actionDispatch(useDispatch());
 
@@ -85,7 +91,7 @@ export default function Products() {
 
   const chooseDishHandler = (id: string) => {
     history.push(`/products/${id}`);
-  }
+  };
 
   return (
     <div className={"products"}>
@@ -238,15 +244,28 @@ export default function Products() {
                       ? product.productVolemu + "litre"
                       : product.productSize + "size";
                   return (
-                    <Stack key={product._id} className={"product-card"} 
-                    onClick={() => chooseDishHandler(product._id)}
+                    <Stack
+                      key={product._id}
+                      className={"product-card"}
+                      onClick={() => chooseDishHandler(product._id)}
                     >
                       <Stack
                         className={"product-img"}
                         sx={{ backgroundImage: `url(${imagePath})` }}
                       >
                         <div className={"product-sale"}>{sizeVolume}</div>
-                        <Button className={"shop-btn"}>
+                        <Button
+                          className={"shop-btn"}
+                          onClick={(e) => {
+                            onAdd({ _id: product._id,
+                              quantity: 1,
+                              name: product.productName,
+                              price: product.productPrice,
+                              image: product.productImages[0],
+                            });
+                            e.stopPropagation();
+                          }}
+                        >
                           <img
                             src={"/icons/shopping-cart.svg"}
                             style={{ display: "flex" }}
