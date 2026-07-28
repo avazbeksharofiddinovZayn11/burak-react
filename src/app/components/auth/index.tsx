@@ -11,6 +11,7 @@ import { Messages } from "../../../lib/config";
 import { LoginInput, MemberInput } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { useGlobals } from "../../hooks/useGlobals";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -48,6 +49,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
   const [memberNick, setMemberNick] = useState<string>("");
   const [memberPhone, setMemberPhone] = useState<string>("");
   const [memberPassword, setMemberPassword] = useState<string>("");
+  const { setAuthMember } = useGlobals();
 
   /** HANDLERS **/
 
@@ -68,24 +70,24 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
     } else if (e.key === "Enter" && loginOpen) {
       handleLoginRequest().then();
     }
-  }
+  };
 
   const handleSignupRequest = async () => {
     try {
       const isFulfill =
         memberNick !== "" && memberPhone !== "" && memberPassword !== "";
-        if (!isFulfill) throw new Error (Messages.error3);
-        const signupInput: MemberInput = {
-          memberNick: memberNick,
-          memberPhone: memberPhone,
-          memberPassword: memberPassword,
-        };
+      if (!isFulfill) throw new Error(Messages.error3);
+      const signupInput: MemberInput = {
+        memberNick: memberNick,
+        memberPhone: memberPhone,
+        memberPassword: memberPassword,
+      };
 
-        const member = new MemberService();
-        const result =await member.signup(signupInput)
-        handleSignupClose();
+      const member = new MemberService();
+      const result = await member.signup(signupInput);
 
-
+      setAuthMember(result)
+      handleSignupClose();
     } catch (err) {
       console.log(err);
       handleSignupClose();
@@ -95,20 +97,19 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
 
   const handleLoginRequest = async () => {
     try {
-      const isFulfill =
-        memberNick !== "" && memberPassword !== "";
-        if (!isFulfill) throw new Error (Messages.error3);
+      const isFulfill = memberNick !== "" && memberPassword !== "";
+      if (!isFulfill) throw new Error(Messages.error3);
 
-        const loginInput: LoginInput = {
-          memberNick: memberNick,
-          memberPassword: memberPassword,
-        };
+      const loginInput: LoginInput = {
+        memberNick: memberNick,
+        memberPassword: memberPassword,
+      };
 
-        const member = new MemberService();
-        const result = await member.login(loginInput)
-        handleLoginClose();
+      const member = new MemberService();
+      const result = await member.login(loginInput);
 
-
+      setAuthMember(result)
+      handleLoginClose();
     } catch (err) {
       console.log(err);
       handleLoginClose();
