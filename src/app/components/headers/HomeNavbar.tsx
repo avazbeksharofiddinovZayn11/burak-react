@@ -7,10 +7,10 @@ import {
   MenuItem,
   Stack,
 } from "@mui/material";
-import Logout from "@mui/icons-material/Logout";
+import { Logout } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
 import Basket from "./Basket";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
@@ -23,8 +23,8 @@ interface HomeNavbarProps {
   onDeleteAll: () => void;
   setSignupOpen: (isOpen: boolean) => void;
   setLoginOpen: (isOpen: boolean) => void;
-  handleLogoutClick: (e: React.MouseEvent<HTMLElement>)=> void;
   anchorEl: HTMLElement | null;
+  handleLogoutClick: (e: React.MouseEvent<HTMLElement>) => void;
   handleCloseLogout: () => void;
   handleLogoutRequest: () => void;
 }
@@ -33,59 +33,60 @@ export default function HomeNavbar(props: HomeNavbarProps) {
   const {
     cartItems,
     onAdd,
-    onRemove,
     onDelete,
     onDeleteAll,
+    onRemove,
     setSignupOpen,
     setLoginOpen,
     handleLogoutClick,
     anchorEl,
     handleCloseLogout,
-    handleLogoutRequest
+    handleLogoutRequest,
   } = props;
-
   const { authMember } = useGlobals();
 
-  /**HANDLERS */
+  /** Handlers **/
 
   return (
     <div className='home-navbar'>
       <Container className='navbar-container'>
         <Stack className='menu'>
           <Box>
-            <NavLink to={"/"}>
+            <NavLink to='/'>
               <img className='brand-logo' src='/icons/burak.svg' />
             </NavLink>
           </Box>
           <Stack className='links'>
             <Box className={"hover-line"}>
-              <NavLink to='/' activeClassName={"urderline"}>
+              <NavLink to='/' activeClassName={"underline"}>
                 Home
               </NavLink>
             </Box>
             <Box className={"hover-line"}>
-              <NavLink to='products'>Products</NavLink>
+              <NavLink to='/products' activeClassName={"underline"}>
+                Products
+              </NavLink>
             </Box>
             {authMember ? (
               <Box className={"hover-line"}>
-                <NavLink to='orders' activeClassName={"urderline"}>
+                <NavLink to='/orders' activeClassName={"underline"}>
                   Orders
                 </NavLink>
               </Box>
             ) : null}
             {authMember ? (
               <Box className={"hover-line"}>
-                <NavLink to='/member-page' activeClassName={"urderline"}>
-                  My page
+                <NavLink to='/member-page' activeClassName={"underline"}>
+                  My Page
                 </NavLink>
               </Box>
             ) : null}
             <Box className={"hover-line"}>
-              <NavLink to='/help' activeClassName={"urderline"}>
+              <NavLink to='/help' activeClassName={"underline"}>
                 Help
               </NavLink>
             </Box>
-
+            {/* BASKET */}
             <Basket
               cartItems={cartItems}
               onAdd={onAdd}
@@ -93,9 +94,11 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               onDelete={onDelete}
               onDeleteAll={onDeleteAll}
             />
+
             {!authMember ? (
               <Box>
                 <Button
+                  variant='contained'
                   className='login-button'
                   onClick={() => setLoginOpen(true)}
                 >
@@ -107,15 +110,16 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                 className='user-avatar'
                 src={
                   authMember?.memberImage
-                    ? `${serverApi}/${authMember?.memberImage}`
+                    ? `${serverApi}/uploads/members/${authMember?.memberImage}`
                     : "/icons/default-user.svg"
                 }
-                aria-haspopu={"true"}
+                aria-haspopup={"true"}
                 onClick={handleLogoutClick}
               />
             )}
+
             <Menu
-            anchorEl={anchorEl}
+              anchorEl={anchorEl}
               id='account-menu'
               open={Boolean(anchorEl)}
               onClick={handleCloseLogout}
@@ -158,29 +162,26 @@ export default function HomeNavbar(props: HomeNavbarProps) {
             </Menu>
           </Stack>
         </Stack>
-        <Stack className={"header-frame"}>
-          {" "}
-          <Stack className={"detail"}>
-            <Box className={"head-main-text"}>
-              World's Most Delicious Cousine
-            </Box>
-            <Box className={"wel-txt"}>The Choice, not just a choice</Box>
-            <Box className={"service-txt"}> 24 hours service</Box>
+        <Stack className='header-frame'>
+          <Stack className='detail'>
+            <Box className='head-main-txt'>World's Most Delicious Cousine</Box>
+            <Box className='wel-txt'>The Choice, not just a choice</Box>
+            <Box className='service-txt'>24 hours service</Box>
             <Box className={"signup"}>
               {!authMember ? (
                 <Button
-                  variant={"contained"}
-                  className={"signup-button"}
+                  variant='contained'
+                  className='signup-button'
                   onClick={() => setSignupOpen(true)}
                 >
-                  SIGN UP
+                  Sign Up
                 </Button>
               ) : null}
             </Box>
           </Stack>
-          <Stack className={"logo-frame"}>
-            <div className={"logo-img"}></div>
-          </Stack>
+          <Box className='logo-frame'>
+            <div className={"logo-img"}> </div>
+          </Box>
         </Stack>
       </Container>
     </div>
