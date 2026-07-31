@@ -7,9 +7,22 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PausedOrders from "./PausedOrders";
 import ProcessOrders from "./ProcessOrders";
 import FinishedOrders from "./FinishedOrders";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setPausedOrders, setProcessOrders, setFinishedOrders } from "./slice";
 import "../../../css/order.css";
+import { Order } from "../../../lib/types/order";
+
+/** REDUX SLICE & SELECTOR **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
+  setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
+  setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
+});
 
 export default function OrdersPage() {
+  const { setPausedOrders, setProcessOrders, setFinishedOrders } =
+    actionDispatch(useDispatch());
   const [value, setValue] = useState("1");
 
   const handleChange = (e: SyntheticEvent, newValue: string) => {
@@ -18,7 +31,7 @@ export default function OrdersPage() {
 
   return (
     <div className={"order-page"}>
-      <Container className="order-container">
+      <Container className='order-container'>
         <Stack className={"order-left"}>
           <TabContext value={value}>
             <Box className={"order-nav-frame"}>
@@ -26,12 +39,12 @@ export default function OrdersPage() {
                 <Tabs
                   value={value}
                   onChange={handleChange}
-                  aria-label="basic tabs example"
+                  aria-label='basic tabs example'
                   className={"table_list"}
                 >
-                  <Tab label="PAUSED ORDERS" value={"1"} />
-                  <Tab label="PROCESS ORDERS" value={"2"} />
-                  <Tab label="FINISHED ORDERS" value={"3"} />
+                  <Tab label='PAUSED ORDERS' value={"1"} />
+                  <Tab label='PROCESS ORDERS' value={"2"} />
+                  <Tab label='FINISHED ORDERS' value={"3"} />
                 </Tabs>
               </Box>
             </Box>
