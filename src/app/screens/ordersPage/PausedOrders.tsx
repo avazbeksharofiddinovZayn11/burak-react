@@ -9,13 +9,13 @@ import { Product } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
 import { Order, OrderItem } from "../../../lib/types/order";
 
-const popularOrderRetriever = createSelector(
+const pausedOrderRetriever = createSelector(
   retrievePausedOrders,
   (pausedOrders) => ({ pausedOrders }),
 );
 
 export default function PausedOrders() {
-  const { pausedOrders } = useSelector(popularOrderRetriever);
+  const { pausedOrders } = useSelector(pausedOrderRetriever);
   console.log("pausedOrders:", pausedOrders)
 
   return (
