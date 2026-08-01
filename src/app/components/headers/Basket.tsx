@@ -8,7 +8,10 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
-import { serverApi } from "../../../lib/config";
+import { Messages, serverApi } from "../../../lib/config";
+import { useGlobals } from "../../hooks/useGlobals";
+import OrderService from "../../services/OrderService";
+import { sweetErrorHandling } from "../../../lib/sweetAlert";
 
 interface BasketProps {
   cartItems: CartItem[];
@@ -20,7 +23,7 @@ interface BasketProps {
 
 export default function Basket(props: BasketProps) {
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
-  const authMember = null;
+  const { authMember } = useGlobals();
   const history = useHistory();
   const itemsPrice = cartItems.reduce(
     (a: number, c: CartItem) => a + c.quantity * c.price,
@@ -38,6 +41,20 @@ export default function Basket(props: BasketProps) {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const proceedOrderHandler = async () => {
+    try {
+      handleClose();
+      if (!authMember) throw new Error(Messages.error2);
+      const order = new OrderService();
+      await order.createOrder(cartItems);
+      onDeleteAll();
+      history.push("/orders");
+    } catch (err) {
+      console.log(err);
+      sweetErrorHandling(err).then();
+    }
   };
 
   return (
@@ -95,7 +112,7 @@ export default function Basket(props: BasketProps) {
               <Stack flexDirection={"row"}>
                 <div>Cart Products:</div>
                 <DeleteForeverIcon
-                  sx={{ ml: "5px", cursor: "pointer"}}
+                  sx={{ ml: "5px", cursor: "pointer" }}
                   color={"primary"}
                   onClick={() => onDeleteAll()}
                 />
@@ -107,7 +124,7 @@ export default function Basket(props: BasketProps) {
               {cartItems.map((item: CartItem) => {
                 const imagePath = `${serverApi}/${item.image}`;
                 return (
-                  <Box className={"basket-info-box"}key={item._id}>
+                  <Box className={"basket-info-box"} key={item._id}>
                     <div className={"cancel-btn"}>
                       <CancelIcon
                         color={"primary"}
@@ -139,8 +156,10 @@ export default function Basket(props: BasketProps) {
           </Box>
           {cartItems.length !== 0 ? (
             <Box className={"basket-order"}>
-              <span className={"price"}>Total: ${totalPrice} ({itemsPrice} + {shippingCost})</span>
-              <Button startIcon={<ShoppingCartIcon />} variant={"contained"}>
+              <span className={"price"}>
+                Total: ${totalPrice} ({itemsPrice} + {shippingCost})
+              </span>
+              <Button onClick={proceedOrderHandler} startIcon={<ShoppingCartIcon />} variant={"contained"}>
                 Order
               </Button>
             </Box>
@@ -152,4 +171,7 @@ export default function Basket(props: BasketProps) {
       </Menu>
     </Box>
   );
+}
+function useGLobals(): { authMember: any } {
+  throw new Error("Function not implemented.");
 }
