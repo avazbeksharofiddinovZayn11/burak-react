@@ -7,7 +7,7 @@ memberStatus: MemberStatus;
 memberNick: string;
 memberPhone: string;
 memberPassword?: string;
-memberAdress: string;
+memberAddress: string;
 memberDesc: string;
 memberImage: string;
 memberPoints: string;
@@ -21,7 +21,7 @@ memberStatus?: MemberStatus;
 memberNick: string;
 memberPhone: string;
 memberPassword: string;
-memberAdress?: string;
+memberAddress?: string;
 memberDesc?: string;
 memberImage?: string;
 memberPoints?: string;
@@ -37,7 +37,7 @@ export interface MemberUpdateInput {
 memberNick?: string;
 memberPhone?: string;
 memberPassword?: string;
-memberAdress?: string;
+memberAddress?: string;
 memberDesc?: string;
 memberImage?: string;
 }
