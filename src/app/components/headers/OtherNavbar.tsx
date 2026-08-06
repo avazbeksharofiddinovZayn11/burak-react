@@ -93,10 +93,10 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                 className='user-avatar'
                 src={
                   authMember?.memberImage
-                    ? `${serverApi}/${authMember?.memberImage}`
+                    ? `${serverApi}/uploads/members/${authMember?.memberImage}`
                     : "/icons/default-user.svg"
                 }
-                aria-haspopu={"true"}
+                aria-haspopup={"true"}
                 onClick={handleLogoutClick}
               />
             )}

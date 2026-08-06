@@ -30,6 +30,7 @@ export function Settings() {
   );
 
   /** HANDLERS **/
+  
 
   const memberNickHandler = (e: T) => {
     memberUpdateInput.memberNick = e.target.value;
